@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  backend:
+    container_name: yeview-backend
+    build:
+      context: ./webapp
+      dockerfile: backEndDockerFile
+    ports:
+      - "8080:8080"
+    environment:
+      JWT_KEY: "svJtcvS5m2Kcr+n6HBnRrF5RSQcU93CnL28rzxme7Ms="
