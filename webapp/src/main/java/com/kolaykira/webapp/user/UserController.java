@@ -2,14 +2,13 @@ package com.kolaykira.webapp.user;
 
 
 import com.kolaykira.webapp.Config.TimestampConverter;
-import lombok.AllArgsConstructor;
+import com.kolaykira.webapp.comment.Comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.google.cloud.Timestamp;;
-import com.kolaykira.webapp.user.AuthenticationResponse;
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -41,6 +40,10 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
+    }
+    @GetMapping(path = "{userEmail}")
+    public User getContractById(@PathVariable(name = "userEmail") String userEmail) throws ExecutionException, InterruptedException {
+        return userService.getUserByEmail(userEmail);
     }
 /*
     @PostMapping("/login")
