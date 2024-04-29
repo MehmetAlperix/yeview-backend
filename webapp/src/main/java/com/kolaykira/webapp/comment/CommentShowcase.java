@@ -1,12 +1,7 @@
 package com.kolaykira.webapp.comment;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.cloud.Timestamp;
 import jakarta.persistence.*;
-import lombok.*;
-
-
 
 
 import lombok.AllArgsConstructor;
@@ -31,7 +26,7 @@ public class CommentShowcase {
     private String menuID;
 
     public CommentShowcase(Comment comment, String userName) {
-        this.commentId = comment.getCommentId();
+        this.commentId = comment.getCommentID();
         this.userEmail = comment.getUserEmail();
         this.rating = comment.getRating();
 

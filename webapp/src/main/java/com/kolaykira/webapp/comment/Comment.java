@@ -20,7 +20,7 @@ import java.util.UUID;
 public class Comment {
 
     @Id
-    private String commentId;
+    private String commentID;
     private String userEmail;
     private long rating;
     // Tenant Info
@@ -32,8 +32,8 @@ public class Comment {
 
     @PrePersist
     public void generateContractId() {
-        if (commentId == null) {
-            commentId = UUID.randomUUID().toString();
+        if (commentID == null) {
+            commentID = UUID.randomUUID().toString();
         }
     }
     public Comment(String text, Timestamp commentDate, String userEmail, long rating, String menuID) {
