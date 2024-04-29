@@ -46,6 +46,6 @@ public class CommentController {
 
     @GetMapping(path = "menucomments/{menuid}")
     public List<CommentShowcase> getCommentShowcasesByMenu(@PathVariable(name = "menuid") String menuId) throws ExecutionException, InterruptedException {
-        return commentService.getCommentShowcaseByMenuID(menuId);
+        return commentService.getCommentShowcaseByCommentID(menuId);
     }
 }

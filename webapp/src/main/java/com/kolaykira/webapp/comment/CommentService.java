@@ -80,11 +80,11 @@ public class CommentService {
         return comments;
     }
 
-    public List<Comment> getCommentsByMenu(String menuID) throws InterruptedException, ExecutionException {
+    public List<Comment> getCommentsByCommentID(String commentID) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         CollectionReference contractsCollection = dbFirestore.collection(COLLECTION_NAME);
 
-        Query query = contractsCollection.whereEqualTo("menuID", menuID);
+        Query query = contractsCollection.whereEqualTo("commentID", commentID);
         ApiFuture<QuerySnapshot> future = query.get();
         QuerySnapshot querySnapshot = future.get();
         List<Comment> comments = new ArrayList<>();
@@ -120,7 +120,7 @@ public class CommentService {
     public String saveContractToFirebase(Comment c) throws ExecutionException, InterruptedException
     {
         Firestore dbFireStore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionAPIFuture = dbFireStore.collection(COLLECTION_NAME).document(c.getCommentId()).set(c);
+        ApiFuture<WriteResult> collectionAPIFuture = dbFireStore.collection(COLLECTION_NAME).document(c.getCommentID()).set(c);
         return collectionAPIFuture.get().getUpdateTime().toString();
     }
 
@@ -129,8 +129,8 @@ public class CommentService {
         return transformCommentToCommentShowcase(comments);
     }
 
-    public List<CommentShowcase> getCommentShowcaseByMenuID(String menuID) throws ExecutionException, InterruptedException {
-        List<Comment> comments =  getCommentsByMenu(menuID);
+    public List<CommentShowcase> getCommentShowcaseByCommentID(String commentID) throws ExecutionException, InterruptedException {
+        List<Comment> comments =  getCommentsByCommentID(commentID);
         return transformCommentToCommentShowcase(comments);
     }
     public List<CommentShowcase> transformCommentToCommentShowcase(List<Comment> comments) throws ExecutionException, InterruptedException {
