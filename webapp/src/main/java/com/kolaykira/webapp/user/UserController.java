@@ -2,7 +2,6 @@ package com.kolaykira.webapp.user;
 
 
 import com.kolaykira.webapp.Config.TimestampConverter;
-import com.kolaykira.webapp.comment.Comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
