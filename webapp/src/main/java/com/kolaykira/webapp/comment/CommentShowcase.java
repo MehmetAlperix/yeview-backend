@@ -24,12 +24,13 @@ public class CommentShowcase {
     private Timestamp commentDate;
     private String userName;
     private String menuID;
+    private String menuTitle;
 
-    public CommentShowcase(Comment comment, String userName) {
+    public CommentShowcase(Comment comment, String userName, String menuTitle) {
         this.commentId = comment.getCommentID();
         this.userEmail = comment.getUserEmail();
         this.rating = comment.getRating();
-
+        this.menuTitle = menuTitle;
         this.text = comment.getText();
         this.commentDate = comment.getCommentDate();
         this.userName = userName ;

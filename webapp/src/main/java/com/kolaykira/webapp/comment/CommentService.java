@@ -3,6 +3,8 @@ package com.kolaykira.webapp.comment;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import com.kolaykira.webapp.menu.Menu;
+import com.kolaykira.webapp.menu.MenuService;
 import com.kolaykira.webapp.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,11 +19,13 @@ public class CommentService {
     private final String COLLECTION_NAME = "comment";
     private final UserService userService;
 
+    private final MenuService menuService;
     /**
      * To add comment
      * */
     public String addComment(Comment comment)
             throws ExecutionException, InterruptedException {
+        Menu m = menuService.getMenuById(comment.getMenuID());
         return saveContractToFirebase(comment);
     }
 
@@ -31,13 +35,13 @@ public class CommentService {
      * */
     public String deleteComment(String commentId) throws ExecutionException, InterruptedException {
         if (commentId == null || commentId.isEmpty()) {
-            throw new IllegalArgumentException("Comment ID must be provided");
+            throw new IllegalArgumentException("Restaurant ID must be provided");
         }
         // Delete comment from Firebase or your preferred data store
         Firestore dbFireStore = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> deleteApiFuture = dbFireStore.collection(COLLECTION_NAME).document(commentId).delete();
         deleteApiFuture.get();
-        return "Comment deleted successfully";
+        return "Restaurant deleted successfully";
     }
 
 
@@ -80,11 +84,11 @@ public class CommentService {
         return comments;
     }
 
-    public List<Comment> getCommentsByCommentID(String commentID) throws InterruptedException, ExecutionException {
+    public List<Comment> getCommentsByMenuID(String menuID) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         CollectionReference contractsCollection = dbFirestore.collection(COLLECTION_NAME);
 
-        Query query = contractsCollection.whereEqualTo("commentID", commentID);
+        Query query = contractsCollection.whereEqualTo("menuID", menuID);
         ApiFuture<QuerySnapshot> future = query.get();
         QuerySnapshot querySnapshot = future.get();
         List<Comment> comments = new ArrayList<>();
@@ -115,7 +119,7 @@ public class CommentService {
     }
 
     /**
-     * Helper Function to save the Comment
+     * Helper Function to save the Restaurant
      * */
     public String saveContractToFirebase(Comment c) throws ExecutionException, InterruptedException
     {
@@ -130,14 +134,23 @@ public class CommentService {
     }
 
     public List<CommentShowcase> getCommentShowcaseByCommentID(String commentID) throws ExecutionException, InterruptedException {
-        List<Comment> comments =  getCommentsByCommentID(commentID);
+        List<Comment> comments =  getCommentsByMenuID(commentID);
         return transformCommentToCommentShowcase(comments);
     }
     public List<CommentShowcase> transformCommentToCommentShowcase(List<Comment> comments) throws ExecutionException, InterruptedException {
         List<CommentShowcase> commentShowcases = new ArrayList<>();
         for(int i = 0; i < comments.size(); i++)
         {
-            commentShowcases.add(new CommentShowcase(comments.get(i), userService.getUserByEmail(comments.get(i).getUserEmail()).getName() ));
+            Menu m = menuService.getMenuById(comments.get(i).getMenuID() );
+            if( m != null  )
+            {
+                commentShowcases.add(new CommentShowcase(comments.get(i), userService.getUserByEmail(comments.get(i).getUserEmail()).getName(), m.getMenuTitle()  ));
+            }
+            else
+            {
+                //do the logic of restaurant
+            }
+
         }
         return commentShowcases;
     }

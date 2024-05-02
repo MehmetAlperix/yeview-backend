@@ -43,7 +43,7 @@ public class MenuService {
 
 
     /**
-     * To get the specific menus by menuID
+     * To get the specific menus by restaurantID
      * @param id
      * */
     public Menu getMenuById(String id) throws ExecutionException, InterruptedException {
@@ -108,6 +108,18 @@ public class MenuService {
         Firestore dbFireStore = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> collectionAPIFuture = dbFireStore.collection(COLLECTION_NAME).document(c.getMenuID()).set(c);
         return collectionAPIFuture.get().getUpdateTime().toString();
+    }
+
+    public String editMenu(MenuEditRequest requestToContract) throws ExecutionException, InterruptedException {
+
+        Menu m = getMenuById( requestToContract.getMenuID() );
+        m.setMenuTitle(requestToContract.getMenuTitle());
+        m.setContext(requestToContract.getContext());
+        m.setRating(requestToContract.getRating());
+        m.setIngredients(requestToContract.getIngredients());
+        m.setRestaurantID(requestToContract.getRestaurantID());
+        saveMenuToFirebase(m);
+        return "Successfully edited menu";
     }
 }
 

@@ -38,5 +38,10 @@ public class MenuController {
     public List<Menu> getCommentsByUser(@PathVariable(name = "restaurantID") String restaurantID) throws ExecutionException, InterruptedException {
         return menuService.getMenusByRestaurant(restaurantID);
     }
+    @PostMapping("/editmenu")
+    public String addContract(@RequestBody MenuEditRequest request) throws ExecutionException, InterruptedException
+    {
+        return menuService.editMenu( request );
+    }
 
 }
