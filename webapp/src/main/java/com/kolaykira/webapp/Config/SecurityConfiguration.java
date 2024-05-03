@@ -23,7 +23,7 @@ public class SecurityConfiguration {
     {
 
         httpSecurity
-                .csrf((csrf) -> csrf.disable() ).authorizeHttpRequests(authorize -> authorize.requestMatchers("api/v1/user/**","/swagger-ui.html","/v3/api-docs",
+                .csrf((csrf) -> csrf.disable() ).authorizeHttpRequests(authorize -> authorize.requestMatchers("api/v1/user/general/**","/swagger-ui.html","/v3/api-docs",
                                 "/v3/api-docs/**",
                                 "/swagger-resources",
                                 "/swagger-resources/**",
@@ -31,7 +31,11 @@ public class SecurityConfiguration {
                                 "/configuration/security",
                                 "/swagger-ui/**",
                                 "/webjars/**",
-                                "/swagger-ui.html").permitAll().anyRequest().authenticated() ).sessionManagement( session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) )
+                                "/swagger-ui.html",
+                        "api/v1/user/get/**",
+                        "api/v1/comment/get/**",
+                        "api/v1/menu/get/**",
+                        "api/v1/restaurant/get/**").permitAll().anyRequest().authenticated()).sessionManagement( session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) )
             .authenticationProvider(authenticationProvider).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         httpSecurity.cors(  Customizer.withDefaults() );
 

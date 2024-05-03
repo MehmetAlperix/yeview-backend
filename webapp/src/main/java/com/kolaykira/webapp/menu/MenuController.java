@@ -25,16 +25,16 @@ public class MenuController {
     public String deleteContract(@PathVariable("menu_id") String id) throws ExecutionException, InterruptedException {
         return menuService.deleteMenu(id);
     }
-    @GetMapping
+    @GetMapping(path = "get/")
     public ResponseEntity<List<Menu>> getMenu() throws ExecutionException, InterruptedException {
         return ResponseEntity.ok().body(menuService.getMenu());
 
     }
-    @GetMapping(path = "{menuID}")
+    @GetMapping(path = "get/{menuID}")
     public Menu getContractById(@PathVariable(name = "menuID") String menuID) throws ExecutionException, InterruptedException {
         return menuService.getMenuById(menuID);
     }
-    @GetMapping(path = "restaurantsmenus/{restaurantID}")
+    @GetMapping(path = "get/restaurantsmenus/{restaurantID}")
     public List<Menu> getCommentsByUser(@PathVariable(name = "restaurantID") String restaurantID) throws ExecutionException, InterruptedException {
         return menuService.getMenusByRestaurant(restaurantID);
     }

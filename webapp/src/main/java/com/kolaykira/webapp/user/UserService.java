@@ -99,11 +99,19 @@ public class UserService implements UserDetailsService {
         return collectionAPIFuture.get().getUpdateTime().toString();
     }
 
+    public String makeOwner(String ownerEmail) throws ExecutionException, InterruptedException {
+        User u = getUserByEmail(ownerEmail);
+        u.setRole(Role.OWNER);
+        saveUserToFirebase(new UserFirebase(u));
+        return "Role Changed Successfully";
+    }
 
     @SneakyThrows
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return getUserByEmail(username);
     }
+
+
 }
 

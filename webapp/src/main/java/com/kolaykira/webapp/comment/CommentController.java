@@ -26,26 +26,26 @@ public class CommentController {
     public String deleteContract(@PathVariable("comment_id") String contractId) throws ExecutionException, InterruptedException {
         return commentService.deleteComment(contractId);
     }
-    @GetMapping
+    @GetMapping(path = "get/")
     public ResponseEntity<List<Comment>> getComments() throws ExecutionException, InterruptedException {
         return ResponseEntity.ok().body(commentService.getComments());
 
     }
-    @GetMapping(path = "{commentId}")
+    @GetMapping(path = "get/{commentId}")
     public Comment getContractById(@PathVariable(name = "commentId") String contractId) throws ExecutionException, InterruptedException {
         return commentService.getCommentsById(contractId);
     }
-    @GetMapping(path = "userdatacomment/{useremail}")
+    @GetMapping(path = "get/userdatacomment/{useremail}")
     public List<Comment> getCommentsByUser(@PathVariable(name = "useremail") String userEmail) throws ExecutionException, InterruptedException {
         return commentService.getCommentsByUser(userEmail);
     }
-    @GetMapping(path = "usercomments/{useremail}")
+    @GetMapping(path = "get/usercomments/{useremail}")
     public List<CommentShowcase> getCommentShowcasesByUser(@PathVariable(name = "useremail") String userEmail) throws ExecutionException, InterruptedException {
         return commentService.getCommentShowcaseByUser(userEmail);
     }
 
 
-    @GetMapping(path = "menucomments/{menuid}")
+    @GetMapping(path = "get/menucomments/{menuid}")
     public List<CommentShowcase> getCommentShowcasesByMenu(@PathVariable(name = "menuid") String menuId) throws ExecutionException, InterruptedException {
         return commentService.getCommentShowcaseByCommentID(menuId);
     }

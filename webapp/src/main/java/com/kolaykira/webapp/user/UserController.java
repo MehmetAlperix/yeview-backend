@@ -16,7 +16,7 @@ import java.util.concurrent.ExecutionException;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/signup")
+    @PostMapping("general/signup")
     public String signUp(@RequestBody UserRequest request) throws ExecutionException, InterruptedException
     {
         String name = request.getName();
@@ -40,9 +40,13 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
     }
-    @GetMapping(path = "{userEmail}")
+    @GetMapping(path = "get/{userEmail}")
     public User getContractById(@PathVariable(name = "userEmail") String userEmail) throws ExecutionException, InterruptedException {
         return userService.getUserByEmail(userEmail);
+    }
+    @PutMapping("/{ownerEmail}")
+    public String makeUserAnOwner(@PathVariable(name = "ownerEmail") String ownerEmail) throws ExecutionException, InterruptedException {
+        return userService.makeOwner(ownerEmail);
     }
 /*
     @PostMapping("/login")
