@@ -64,11 +64,11 @@ public class RestaurantService {
     /**
      * To get the contracts with specific property owner
      * */
-    public List<Restaurant> getRestaurantByOwner(String ownerID) throws InterruptedException, ExecutionException {
+    public List<Restaurant> getRestaurantByOwner(String owner) throws InterruptedException, ExecutionException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         CollectionReference contractsCollection = dbFirestore.collection(COLLECTION_NAME);
 
-        Query query = contractsCollection.whereEqualTo("ownerID", ownerID);
+        Query query = contractsCollection.whereEqualTo("owner", owner);
         ApiFuture<QuerySnapshot> future = query.get();
         QuerySnapshot querySnapshot = future.get();
         List<Restaurant> restaurants = new ArrayList<>();
