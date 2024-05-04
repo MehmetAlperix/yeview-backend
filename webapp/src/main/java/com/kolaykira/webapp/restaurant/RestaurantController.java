@@ -20,7 +20,11 @@ public class RestaurantController {
     {
         return restaurantService.addRestaurant( RestaurantRequestToRestaurant.requestToContract(request) );
     }
-
+    @PostMapping("/editRestaurant")
+    public String editRestaurant(@RequestBody RestaurantEditRequest request) throws ExecutionException, InterruptedException
+    {
+        return restaurantService.editRestaurant( request );
+    }
     @DeleteMapping(path = "{restaurant_id}")
     public String deleteContract(@PathVariable("restaurant_id") String contractId) throws ExecutionException, InterruptedException {
         return restaurantService.deleteComment(contractId);
@@ -32,7 +36,7 @@ public class RestaurantController {
     }
     @GetMapping(path = "get/{restaurant_id}")
     public Restaurant getContractById(@PathVariable(name = "restaurant_id") String contractId) throws ExecutionException, InterruptedException {
-        return restaurantService.getCommentsById(contractId);
+        return restaurantService.getRestaurantByID(contractId);
     }
     @GetMapping(path = "get/owner/{owner}")
     public List<Restaurant> getCommentsByUser(@PathVariable(name = "owner") String owner) throws ExecutionException, InterruptedException {

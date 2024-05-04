@@ -35,7 +35,9 @@ public class SecurityConfiguration {
                         "api/v1/user/get/**",
                         "api/v1/comment/get/**",
                         "api/v1/menu/get/**",
-                        "api/v1/restaurant/get/**").permitAll().anyRequest().authenticated()).sessionManagement( session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) )
+                        "api/v1/restaurant/get/**",
+                "api/v1/user/auth/**"
+                        ).permitAll().anyRequest().authenticated()).sessionManagement( session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) )
             .authenticationProvider(authenticationProvider).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         httpSecurity.cors(  Customizer.withDefaults() );
 

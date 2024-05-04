@@ -113,11 +113,7 @@ public class MenuService {
     public String editMenu(MenuEditRequest requestToContract) throws ExecutionException, InterruptedException {
 
         Menu m = getMenuById( requestToContract.getMenuID() );
-        m.setMenuTitle(requestToContract.getMenuTitle());
         m.setContext(requestToContract.getContext());
-        m.setRating(requestToContract.getRating());
-        m.setIngredients(requestToContract.getIngredients());
-        m.setRestaurantID(requestToContract.getRestaurantID());
         saveMenuToFirebase(m);
         return "Successfully edited menu";
     }

@@ -26,6 +26,7 @@ public class RestaurantService {
     }
 
 
+
     /**
      * To delete contract by a given restaurantID
      * */
@@ -46,7 +47,7 @@ public class RestaurantService {
      * To get the specific contracts by contractId
      * @param id
      * */
-    public Restaurant getCommentsById(String id) throws ExecutionException, InterruptedException {
+    public Restaurant getRestaurantByID(String id) throws ExecutionException, InterruptedException {
         Firestore dbFireStore = FirestoreClient.getFirestore();
         DocumentReference documentReference = dbFireStore.collection(COLLECTION_NAME).document(id);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
@@ -108,7 +109,12 @@ public class RestaurantService {
     }
 
 
-
-
+    public String editRestaurant(RestaurantEditRequest request) throws ExecutionException, InterruptedException {
+        Restaurant r = getRestaurantByID(request.getRestaurantID());
+        r.setRestaurantTitle(request.getRestaurantTitle());
+        r.setText(request.getText());
+        addRestaurant(r);
+        return "Done successfully";
+    }
 }
 

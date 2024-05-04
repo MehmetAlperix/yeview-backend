@@ -11,12 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MenuEditRequest {
-    private String menuTitle;
     private String context;
-    private long rating;
     // Tenant Info
-    private String ingredients;
-    private String restaurantID;
     private String menuID;
 
 }

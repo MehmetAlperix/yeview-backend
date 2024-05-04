@@ -5,6 +5,7 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import com.kolaykira.webapp.menu.Menu;
 import com.kolaykira.webapp.menu.MenuService;
+import com.kolaykira.webapp.restaurant.RestaurantService;
 import com.kolaykira.webapp.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class CommentService {
     private final String COLLECTION_NAME = "comment";
     private final UserService userService;
 
+    private final RestaurantService restaurantService;
     private final MenuService menuService;
     /**
      * To add comment
@@ -148,7 +150,8 @@ public class CommentService {
             }
             else
             {
-                //do the logic of restaurant
+               commentShowcases.add(new CommentShowcase(comments.get(i), userService.getUserByEmail(comments.get(i).getUserEmail()).getName(),
+                       restaurantService.getRestaurantByID( comments.get(i).getMenuID()).getRestaurantTitle()  ));
             }
 
         }
