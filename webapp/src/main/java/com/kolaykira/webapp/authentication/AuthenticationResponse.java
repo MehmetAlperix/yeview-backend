@@ -1,5 +1,6 @@
-package com.kolaykira.webapp.user;
+package com.kolaykira.webapp.authentication;
 
+import com.kolaykira.webapp.user.Role;
 import lombok.*;
 
 @NoArgsConstructor
@@ -8,4 +9,5 @@ import lombok.*;
 @Builder
 public class AuthenticationResponse {
     private String token;
+    private Role role;
 }

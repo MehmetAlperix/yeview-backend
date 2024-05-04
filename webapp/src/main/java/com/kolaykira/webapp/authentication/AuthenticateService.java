@@ -1,7 +1,7 @@
 package com.kolaykira.webapp.authentication;
 
 import com.kolaykira.webapp.authentication.jwt.JwtService;
-import com.kolaykira.webapp.user.AuthenticationResponse;
+import com.kolaykira.webapp.user.Role;
 import com.kolaykira.webapp.user.User;
 import com.kolaykira.webapp.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +44,8 @@ public class AuthenticateService {
 
                 authenticate(email,password);
                 String token = generateToken(u);
-                return AuthenticationResponse.builder().token(token).build();
+                Role role = u.getRole();
+                return AuthenticationResponse.builder().token(token).role(role).build();
             }
             else
             {

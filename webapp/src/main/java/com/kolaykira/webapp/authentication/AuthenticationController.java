@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.kolaykira.webapp.user.AuthenticationResponse;
+
 import java.util.concurrent.ExecutionException;
 
 @RestController

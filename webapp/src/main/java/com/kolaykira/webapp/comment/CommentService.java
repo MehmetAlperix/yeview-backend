@@ -5,6 +5,7 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import com.kolaykira.webapp.menu.Menu;
 import com.kolaykira.webapp.menu.MenuService;
+import com.kolaykira.webapp.restaurant.Restaurant;
 import com.kolaykira.webapp.restaurant.RestaurantService;
 import com.kolaykira.webapp.user.UserService;
 import lombok.AllArgsConstructor;
@@ -132,6 +133,7 @@ public class CommentService {
 
     public List<CommentShowcase> getCommentShowcaseByUser(String userEmail) throws ExecutionException, InterruptedException {
         List<Comment> comments =  getCommentsByUser( userEmail);
+        System.out.println( comments);
         return transformCommentToCommentShowcase(comments);
     }
 
@@ -141,6 +143,10 @@ public class CommentService {
     }
     public List<CommentShowcase> transformCommentToCommentShowcase(List<Comment> comments) throws ExecutionException, InterruptedException {
         List<CommentShowcase> commentShowcases = new ArrayList<>();
+        if (comments == null)
+        {
+            return commentShowcases;
+        }
         for(int i = 0; i < comments.size(); i++)
         {
             Menu m = menuService.getMenuById(comments.get(i).getMenuID() );
@@ -150,10 +156,12 @@ public class CommentService {
             }
             else
             {
-               commentShowcases.add(new CommentShowcase(comments.get(i), userService.getUserByEmail(comments.get(i).getUserEmail()).getName(),
-                       restaurantService.getRestaurantByID( comments.get(i).getMenuID()).getRestaurantTitle()  ));
+                Restaurant r = restaurantService.getRestaurantByID( comments.get(i).getMenuID());
+               if( r != null)
+               {
+                   commentShowcases.add(new CommentShowcase(comments.get(i), userService.getUserByEmail(comments.get(i).getUserEmail()).getName(), r.getRestaurantTitle() ) );
+               }
             }
-
         }
         return commentShowcases;
     }
