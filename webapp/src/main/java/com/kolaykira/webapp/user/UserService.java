@@ -106,6 +106,13 @@ public class UserService implements UserDetailsService {
         return "Role Changed Successfully";
     }
 
+    public String makeNormalUser(String ownerEmail) throws ExecutionException, InterruptedException {
+        User u = getUserByEmail(ownerEmail);
+        u.setRole(Role.NormalUser);
+        saveUserToFirebase(new UserFirebase(u));
+        return "Role Changed Successfully";
+    }
+
     @SneakyThrows
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

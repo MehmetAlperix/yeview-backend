@@ -22,7 +22,8 @@ public class MenuService {
      * */
     public String addMenu(Menu menu)
             throws ExecutionException, InterruptedException {
-        return saveMenuToFirebase(menu);
+       saveMenuToFirebase(menu);
+       return menu.getMenuID();
     }
 
 

@@ -48,62 +48,9 @@ public class UserController {
     public String makeUserAnOwner(@PathVariable(name = "ownerEmail") String ownerEmail) throws ExecutionException, InterruptedException {
         return userService.makeOwner(ownerEmail);
     }
-/*
-    @PostMapping("/login")
-    public String login(@RequestParam("email") String email,
-                        @RequestParam("password") String password,
-                        HttpSession session){
 
-        // Perform authentication logic here, such as validating username and password
-        if (userService.getUserByEmail(email) != null && userService.passwordMatches(password,
-                userService.getUserByEmail(email).getPassword())
-        ) {
-            // Authentication successful, set user information in session
-            session.setAttribute("userId", userService.getUserByEmail(email).getId());
-            if(userService.getUserByEmail(email).getRole() == Role.ADMIN){ return "redirect:/admin_dashboard";}
-            else{return  "redirect:/home";}
-        } else {
-            // Authentication failed, redirect back to login page with an error message
-            return "redirect:/login";
-        }
+    @PutMapping("/makeNormaluser/{ownerEmail}")
+    public String makeUserANormalUser(@PathVariable(name = "ownerEmail") String ownerEmail) throws ExecutionException, InterruptedException {
+        return userService.makeNormalUser(ownerEmail);
     }
-
-
-
-    @PostMapping("/signup")
-    public String signup(@RequestParam("name") String name,
-                         @RequestParam("surname") String surname,
-                         @RequestParam("birthdate") String birthdate,
-                         @RequestParam("email") String email,
-                         @RequestParam("password") String password,
-                         @RequestParam("city") String city,
-                         HttpSession session){
-
-        if (userService.getUserByEmail(email) != null) {
-            // User with the same email already exists, redirect back to signup page with an error message
-            return "redirect:/signup?error=emailExists";
-        }
-
-        // Create a new appUserRequest
-        AppUserRequest appUserRequest = new AppUserRequest(name, surname, email, password, Timestamp.valueOf(birthdate), 0.0, city);
-
-        User newUser = new User();
-        newUser.setName(name);
-        newUser.setSurname(surname);
-        newUser.setBirthDate(Timestamp.valueOf(birthdate));
-        newUser.setEmail(email);
-        newUser.setPassword(password);
-        newUser.setRole(Role.APP_USER);
-
-        // Save the new user to the database
-        //userService.saveUser(newUser);
-        appUserService.addAppUser(appUserRequest);
-        // Set user information in session
-        session.setAttribute("userId", newUser.getId());
-
-        // Redirect to the home page or any other desired destination
-        return "redirect:/home";
-    }
-    */
-
 }
