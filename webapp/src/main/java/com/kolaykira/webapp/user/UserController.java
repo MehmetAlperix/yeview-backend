@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.google.cloud.Timestamp;;
+import com.google.cloud.Timestamp;
 import java.util.concurrent.ExecutionException;
 
 @RestController
