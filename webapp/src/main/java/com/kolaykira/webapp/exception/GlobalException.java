@@ -42,4 +42,14 @@ public class GlobalException {
         eObject.setTimestamp(Time.getCurrentTimestamp());
         return new ResponseEntity<ErrorObject>(eObject, HttpStatus.OK);
     }
+
+    @ExceptionHandler(value = { RuntimeException.class})
+    public ResponseEntity<ErrorObject> handleErrors(RuntimeException exception)
+    {
+        ErrorObject eObject = new ErrorObject();
+        eObject.setStatus(HttpStatus.NO_CONTENT.value());
+        eObject.setMessage("Sistem hatası");
+        eObject.setTimestamp(Time.getCurrentTimestamp());
+        return new ResponseEntity<ErrorObject>(eObject, HttpStatus.OK);
+    }
 }
