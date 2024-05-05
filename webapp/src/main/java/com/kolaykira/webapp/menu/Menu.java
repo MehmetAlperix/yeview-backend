@@ -32,6 +32,7 @@ public class Menu {
     private int numberOfRatings;
     private String restaurantID;
 
+    private String imageURL;
 
 
     @PrePersist
@@ -40,7 +41,7 @@ public class Menu {
             menuID = UUID.randomUUID().toString();
         }
     }
-    public Menu(String menuTitle, String ingredients, Timestamp commentDate, String context, long rating, String restaurantID) {
+    public Menu(String menuTitle, String ingredients, Timestamp commentDate, String context, long rating, String restaurantID, String imageURL) {
         this.ingredients = ingredients;
         this.menuTitle = menuTitle;
         this.commentDate = commentDate;
@@ -48,6 +49,18 @@ public class Menu {
         this.rating = rating;
         this.numberOfRatings = 0;
         this.restaurantID = restaurantID;
+        this.imageURL = imageURL;
+        generateContractId();
+    }
+    public Menu(String menuID, String menuTitle, String ingredients, Timestamp commentDate, String context, long rating, String restaurantID) {
+        this.ingredients = ingredients;
+        this.menuTitle = menuTitle;
+        this.commentDate = commentDate;
+        this.context = context;
+        this.rating = rating;
+        this.numberOfRatings = 0;
+        this.restaurantID = restaurantID;
+        this.menuID = menuID;
         generateContractId();
     }
 

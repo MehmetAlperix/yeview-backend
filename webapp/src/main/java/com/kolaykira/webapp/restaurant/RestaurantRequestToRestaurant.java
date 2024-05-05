@@ -13,6 +13,6 @@ public class RestaurantRequestToRestaurant {
         // Tenant Info
         String text = request.getText();
         String restaurantTitle = request.getRestaurantTitle();
-        return new Restaurant(text,  TimestampConverter.convertJavaSqlTimestamp(Time.getCurrentTimestamp() ),  owner,  rating, restaurantTitle);
+        return new Restaurant(text,  TimestampConverter.convertJavaSqlTimestamp(Time.getCurrentTimestamp() ),  owner,  rating, restaurantTitle, request.getImageURL());
     }
 }

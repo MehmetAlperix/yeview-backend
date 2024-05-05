@@ -4,24 +4,40 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
 import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 
 
+@Getter
 @Service
+@RequiredArgsConstructor
 public class FirebaseInitialize {
 
     @PostConstruct
     public void initialize() {
+
+        InputStream inputStream = FirebaseInitialize.JsonCreator();
+        try {
+            FirebaseOptions options = FirebaseOptions.builder()
+                    .setCredentials(GoogleCredentials.fromStream(inputStream))
+                    .build();
+            FirebaseApp.initializeApp(options);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ByteArrayInputStream JsonCreator()
+    {
         String json = "{" +
                 "\"type\": \"service_account\"," +
                 "\"project_id\": \"yeview-b01f7\"," +
@@ -66,41 +82,9 @@ public class FirebaseInitialize {
         jsonObject = com.google.gson.JsonParser.parseString(json).getAsJsonObject();
 
         byte[] jsonBytes = jsonObject.toString().getBytes(StandardCharsets.UTF_8);
-        InputStream inputStream = new ByteArrayInputStream(jsonBytes);
-        try {
-            FirebaseOptions options = FirebaseOptions.builder()
-                    .setCredentials(GoogleCredentials.fromStream(inputStream))
-                    .build();
-            FirebaseApp.initializeApp(options);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+       return new ByteArrayInputStream(jsonBytes);
     }
 }
-
-            /*
-    {
-        try {
-            FileInputStream serviceAccount =
-                    new FileInputStream("./serviceAccountKey.json");
-
-            FirebaseOptions options = null;
-            try {
-                options = FirebaseOptions.builder()
-                        .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                        .build();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            FirebaseApp.initializeApp(options);
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-
-    }
- }
-    */
 
 
 

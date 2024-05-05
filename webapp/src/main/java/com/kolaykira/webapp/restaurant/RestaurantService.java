@@ -109,10 +109,19 @@ public class RestaurantService {
     }
 
 
+    public String rate(String restaurantID, long newRating) throws ExecutionException, InterruptedException {
+        Restaurant r = getRestaurantByID(restaurantID);
+        long newNewRating = (r.getRating() * r .getNumberOfRatings() + newRating ) / ( r.getNumberOfRatings() + 1 );
+        r.setRating(newNewRating);
+        r.setNumberOfRatings(r.getNumberOfRatings() + 1);
+        addRestaurant(r);
+        return "Successfull";
+    }
     public String editRestaurant(RestaurantEditRequest request) throws ExecutionException, InterruptedException {
         Restaurant r = getRestaurantByID(request.getRestaurantID());
         r.setRestaurantTitle(request.getRestaurantTitle());
         r.setText(request.getText());
+        r.setImageURL(request.getImageURL());
         addRestaurant(r);
         return "Done successfully";
     }

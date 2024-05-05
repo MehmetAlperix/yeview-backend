@@ -13,6 +13,6 @@ public class MenuRequestToRequest {
         long rating = request.getRating();
         String RestaurantID = request.getRestaurantID();
         String menuTitle = request.getMenuTitle();
-       return new Menu(menuTitle, ingredients,  TimestampConverter.convertJavaSqlTimestamp(Time.getCurrentTimestamp()), context,  rating,  RestaurantID);
+       return new Menu(menuTitle, ingredients,  TimestampConverter.convertJavaSqlTimestamp(Time.getCurrentTimestamp()), context,  rating,  RestaurantID, request.getImageURL() );
     }
 }

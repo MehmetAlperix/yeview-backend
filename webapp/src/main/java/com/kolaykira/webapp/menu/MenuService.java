@@ -3,6 +3,8 @@ package com.kolaykira.webapp.menu;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import com.kolaykira.webapp.exception.NoDataFoundException;
+import com.kolaykira.webapp.restaurant.Restaurant;
 import com.kolaykira.webapp.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -113,10 +115,26 @@ public class MenuService {
 
     public String editMenu(MenuEditRequest requestToContract) throws ExecutionException, InterruptedException {
 
+
         Menu m = getMenuById( requestToContract.getMenuID() );
+        if(m==null)
+        {
+            throw new NoDataFoundException("Desired Menu Not Found");
+        }
         m.setContext(requestToContract.getContext());
+        m.setImageURL(requestToContract.getImageURL());
         saveMenuToFirebase(m);
         return "Successfully edited menu";
     }
+
+    public String rate(String menuID, long newRating) throws ExecutionException, InterruptedException {
+        Menu m = getMenuById(menuID);
+        long newNewRating = (m.getRating() * m .getNumberOfRatings() + newRating ) / ( m.getNumberOfRatings() + 1 );
+        m.setRating(newNewRating);
+        m.setNumberOfRatings(m.getNumberOfRatings() + 1);
+        saveMenuToFirebase(m);
+        return "Successfull";
+    }
+
 }
 

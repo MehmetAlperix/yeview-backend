@@ -22,4 +22,5 @@ public class RestaurantRequest {
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp createDate;
     private String restaurantTitle;
+    private String imageURL;
 }

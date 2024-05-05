@@ -19,4 +19,5 @@ public class RestaurantEditRequest {
     // Tenant Info
     private String text;
     private String restaurantTitle;
+    private String imageURL;
 }

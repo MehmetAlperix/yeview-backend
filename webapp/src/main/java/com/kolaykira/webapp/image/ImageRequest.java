@@ -1,4 +1,4 @@
-package com.kolaykira.webapp.menu;
+package com.kolaykira.webapp.image;
 
 
 import lombok.AllArgsConstructor;
@@ -10,10 +10,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MenuEditRequest {
-    private String context;
-    // Tenant Info
-    private String menuID;
-    private String imageURL;
+public class ImageRequest {
+    private String base64;
+    private String fileName;
 
 }

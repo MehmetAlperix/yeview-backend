@@ -29,6 +29,8 @@ public class Restaurant {
     private Timestamp createDate;
 
     private String restaurantTitle;
+    private int numberOfRatings;
+    private String imageURL;
 
     @PrePersist
     public void generateContractId() {
@@ -36,12 +38,14 @@ public class Restaurant {
             restaurantID = UUID.randomUUID().toString();
         }
     }
-    public Restaurant(String text, Timestamp createDate, String owner, long rating, String restaurantTitle) {
+    public Restaurant(String text, Timestamp createDate, String owner, long rating, String restaurantTitle, String imageURL) {
         this.text = text;
         this.createDate = createDate;
         this.owner = owner;
         this.rating = rating;
         this.restaurantTitle = restaurantTitle;
+        this.numberOfRatings = 0;
+        this.imageURL = imageURL;
         generateContractId();
     }
 

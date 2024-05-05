@@ -29,6 +29,19 @@ public class CommentService {
     public String addComment(Comment comment)
             throws ExecutionException, InterruptedException {
         Menu m = menuService.getMenuById(comment.getMenuID());
+        if( m != null)
+        {
+            menuService.rate(comment.getMenuID(), comment.getRating());
+        }
+        else
+        {
+            Restaurant r = restaurantService.getRestaurantByID(comment.getMenuID());
+            if(r != null)
+            {
+                restaurantService.rate(comment.getMenuID(), comment.getRating() );
+            }
+
+        }
         return saveContractToFirebase(comment);
     }
 
