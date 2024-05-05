@@ -129,19 +129,21 @@ public class UserService implements UserDetailsService {
             throw new NoDataFoundException("No username");
         }
 
-
-        if( passwordEncoder.matches(password, u.getPassword()) )
+        if(newPassword == "")
         {
-            u.setPassword( passwordEncoder.encode( newPassword) );
             u.setName(name);
             u.setSurname(surname);
             u.setPhone(phoneNumber);
         }
+        else if(newPassword != "" && passwordEncoder.matches(password, u.getPassword()) )
+        {
+            u.setPassword( passwordEncoder.encode( newPassword) );
+
+        }
         else
         {
-            throw new InvalidCredentialsException("Wrong password");
+            throw new InvalidCredentialsException("Wrong password, can't change password");
         }
-
 
         saveUserToFirebase(new UserFirebase(u) );
         return true;
