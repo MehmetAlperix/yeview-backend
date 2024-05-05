@@ -53,4 +53,16 @@ public class UserController {
     public String makeUserANormalUser(@PathVariable(name = "ownerEmail") String ownerEmail) throws ExecutionException, InterruptedException {
         return userService.makeNormalUser(ownerEmail);
     }
+    @PutMapping("changeUserDetails")
+    public Boolean ChangeUserDetails(@RequestBody UserUpdateRequest request) throws ExecutionException, InterruptedException
+    {
+        String email = request.getMail();
+        String name = request.getName();
+        String password = request.getPassword();
+        String newPassword = request.getNewPassword();
+        String surname = request.getSurname();
+        String phone = request.getPhone();
+
+        return userService.changeUserDetails(email,name,password,newPassword,surname,phone);
+    }
 }
