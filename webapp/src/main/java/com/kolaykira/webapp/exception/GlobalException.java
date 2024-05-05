@@ -30,7 +30,15 @@ public class GlobalException {
         eObject.setTimestamp(Time.getCurrentTimestamp());
         return new ResponseEntity<ErrorObject>(eObject, HttpStatus.OK);
     }
-
+    @ExceptionHandler(value = { InvalidCredentialsException.class})
+    public ResponseEntity<ErrorObject> handleInvalidCredentialsException(InvalidCredentialsException ex)
+    {
+        ErrorObject eObject = new ErrorObject();
+        eObject.setStatus(HttpStatus.NO_CONTENT.value());
+        eObject.setMessage(ex.getMessage());
+        eObject.setTimestamp(Time.getCurrentTimestamp());
+        return new ResponseEntity<ErrorObject>(eObject, HttpStatus.OK);
+    }
 
 
     @ExceptionHandler(value = { InterruptedException.class, ExecutionException.class})

@@ -7,6 +7,8 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
+import com.kolaykira.webapp.exception.InvalidCredentialsException;
+import com.kolaykira.webapp.exception.NoDataFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,12 +126,22 @@ public class UserService implements UserDetailsService {
         User u = getUserByEmail(email);
         if(u == null)
         {
-            return false;
+            throw new NoDataFoundException("No username");
         }
-        u.setPassword( passwordEncoder.encode( newPassword) );
-        u.setName(name);
-        u.setSurname(surname);
-        u.setPhone(phoneNumber);
+
+
+        if( passwordEncoder.matches(password, u.getPassword()) )
+        {
+            u.setPassword( passwordEncoder.encode( newPassword) );
+            u.setName(name);
+            u.setSurname(surname);
+            u.setPhone(phoneNumber);
+        }
+        else
+        {
+            throw new InvalidCredentialsException("Wrong password");
+        }
+
 
         saveUserToFirebase(new UserFirebase(u) );
         return true;

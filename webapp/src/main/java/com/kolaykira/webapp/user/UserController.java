@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.google.cloud.Timestamp;
+import org.yaml.snakeyaml.Yaml;
+
 import java.util.concurrent.ExecutionException;
 
 @RestController
@@ -56,13 +58,13 @@ public class UserController {
     @PutMapping("changeUserDetails")
     public Boolean ChangeUserDetails(@RequestBody UserUpdateRequest request) throws ExecutionException, InterruptedException
     {
-        String email = request.getMail();
+        String email = request.getEmail();
         String name = request.getName();
         String password = request.getPassword();
+        System.out.println(password);
         String newPassword = request.getNewPassword();
         String surname = request.getSurname();
         String phone = request.getPhone();
-
-        return userService.changeUserDetails(email,name,password,newPassword,surname,phone);
+        return userService.changeUserDetails(email,  password, newPassword, name, surname, phone);
     }
 }

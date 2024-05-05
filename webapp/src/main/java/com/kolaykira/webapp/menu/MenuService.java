@@ -4,7 +4,6 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import com.kolaykira.webapp.exception.NoDataFoundException;
-import com.kolaykira.webapp.restaurant.Restaurant;
 import com.kolaykira.webapp.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
