@@ -119,6 +119,22 @@ public class UserService implements UserDetailsService {
         return getUserByEmail(username);
     }
 
+    public boolean changeUserDetails(String email, String password, String newPassword,String name, String surname,String phoneNumber) throws ExecutionException, InterruptedException
+    {
+        User u = getUserByEmail(email);
+        if(u == null)
+        {
+            return false;
+        }
+        u.setPassword( passwordEncoder.encode( newPassword) );
+        u.setName(name);
+        u.setSurname(surname);
+        u.setPhone(phoneNumber);
+
+        saveUserToFirebase(new UserFirebase(u) );
+        return true;
+    }
+
 
 }
 
