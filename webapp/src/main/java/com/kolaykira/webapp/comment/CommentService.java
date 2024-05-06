@@ -178,5 +178,13 @@ public class CommentService {
         }
         return commentShowcases;
     }
+
+    public void deleteCommentByMenuID(String contractId) throws ExecutionException, InterruptedException {
+        List<Comment> comments = getCommentsByMenuID(contractId);
+        for(int i = 0; i < comments.size(); i++)
+        {
+            deleteComment( comments.get(i).getCommentID() );
+        }
+    }
 }
 

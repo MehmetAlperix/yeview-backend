@@ -1,5 +1,6 @@
 package com.kolaykira.webapp.menu;
 
+import com.kolaykira.webapp.comment.CommentService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 public class MenuController {
 
     private final MenuService menuService;
+    private final CommentService commentService;
 
     @PostMapping("/addmenu")
     public String addContract(@RequestBody MenuRequest request) throws ExecutionException, InterruptedException
@@ -23,6 +25,7 @@ public class MenuController {
 
     @DeleteMapping(path = "{menu_id}")
     public String deleteContract(@PathVariable("menu_id") String id) throws ExecutionException, InterruptedException {
+        deleteMenusByRestaurant(id);
         return menuService.deleteMenu(id);
     }
     @GetMapping(path = "get/")
@@ -45,5 +48,16 @@ public class MenuController {
     }
 
 
-
+    public void deleteMenusByRestaurant(String contractId) throws ExecutionException, InterruptedException {
+        List<Menu> menus = menuService.getMenusByRestaurant(contractId);
+        commentService.deleteCommentByMenuID(contractId);
+        if(menus != null)
+        {
+            for(int i = 0; i< menus.size();i++)
+            {
+                commentService.deleteCommentByMenuID( menus.get(i).getMenuID() );
+                menuService.deleteMenu(menus.get(i).getMenuID());
+            }
+        }
+    }
 }
